@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ title }}
+{% endblock title %}
+
+{% block content %}
+
+    <div style="color:#575757; font-weight: bold; font-size: 3rem; border-bottom: 1px solid white;">
+        {{ title }}
+    </div>
+    
+    <br>
+
+    <form method="post">
+        {% csrf_token %}
+        
+        <!-- Display Non-Field Errors -->
+        <div class="form-errors">
+            {{ form.non_field_errors }}
+        </div>
+
+        <!-- Name Field -->
+        <div class="form-group">
+            {{ form.name.errors }}
+            <label for="{{ form.name.id_for_label }}">Name:</label>
+            {{ form.name }}
+        </div>
+
+        <!-- Quantity Field -->
+        <div class="form-group">
+            {{ form.quantity.errors }}
+            <label for="{{ form.quantity.id_for_label }}">Quantity:</label>
+            {{ form.quantity }}
+        </div>
+
+        <br>
+
+        <div class="align-middle">
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-success">{{ savebtn }}</button>
+            
+            <!-- Reset Button for New Stock -->
+            {% if title == "New Stock" %}
+                <button type="reset" class="btn btn-danger">Reset</button>
+            {% endif %}
+
+            <!-- Delete Button -->
+            {% if delbtn %}
+                <a href="{% url 'delete-stock' object.pk %}" class="btn btn-danger">Delete Stock</a>
+            {% endif %}
+            
+            <!-- Cancel Button -->
+            <a href="{% url 'inventory' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+        
+    </form>
+
+{% endblock content %}
